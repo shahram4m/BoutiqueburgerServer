@@ -32,7 +32,7 @@ import java.util.Collections;
 
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/account")
 public class AccountController {
 
     @Autowired
@@ -68,12 +68,12 @@ public class AccountController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-        if(userRepository.ExistsByUsername(signUpRequest.getUsername())) {
+        if(userRepository.existsByUsername(signUpRequest.getUsername())) {
             return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
-        if(userRepository.ExistsByEmail(signUpRequest.getEmail())) {
+        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
             return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
