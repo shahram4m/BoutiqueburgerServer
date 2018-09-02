@@ -1,18 +1,15 @@
 package ir.server.boutiqueburger.models;
 
-
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
-
 public class Order extends AuditModel {
 
     @Id
@@ -21,10 +18,6 @@ public class Order extends AuditModel {
 
     private double grandTotal;
 
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
-    @Size(min = 2, max = 6)
-    @Fetch(FetchMode.SELECT)
-    @BatchSize(size = 30)
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -47,6 +40,10 @@ public class Order extends AuditModel {
             this.grandTotal = grandTotal;
     }
 
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
+    @Size(min = 2, max = 6)
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size = 30)
     public List<OrderDetail> getOrderDetails() {
             return orderDetails;
     }

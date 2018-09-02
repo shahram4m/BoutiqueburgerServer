@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "products")
-public class Product {
+public class Product extends AuditModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,10 +29,6 @@ public class Product {
     @JoinColumn(name = "booth_id", nullable = false)
     private Booth booth;
 
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
-    @Size(min = 2, max = 6)
-    @Fetch(FetchMode.SELECT)
-    @BatchSize(size = 30)
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
     public Product() {}
@@ -86,6 +82,10 @@ public class Product {
         this.description = description;
     }
 
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
+    @Size(min = 2, max = 6)
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size = 30)
     public List<OrderDetail> getOrderDetails() {
         return orderDetails;
     }
