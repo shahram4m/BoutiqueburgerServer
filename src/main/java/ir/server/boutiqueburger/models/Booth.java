@@ -1,5 +1,9 @@
 package ir.server.boutiqueburger.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -23,14 +27,16 @@ public class Booth extends AuditModel{
     @Size(max = 255)
     private String title;
 
-    @OneToMany(mappedBy = "booth",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
-    @Size(min = 2, max = 6)
+/*    @OneToMany(mappedBy = "booth",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
+    //@Size(min = 2, max = 6)
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 30)
-    private List<Product> products = new ArrayList<>();
+    private List<Product> products = new ArrayList<>();*/
 
-    @NotNull
-    private Instant expirationDateTime;
+    /*@NotNull
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private Instant expirationDateTime = Instant.now();*/
 
     public Long getId() {
         return id;
@@ -48,23 +54,27 @@ public class Booth extends AuditModel{
         this.title = title;
     }
 
-    public List<Product> getProducts() {
+/*    public List<Product> getProducts() {
         return products;
     }
 
     public void setProducts(List<Product> products) {
         this.products = products;
-    }
+    }*/
 
-    public Instant getExpirationDateTime() {
+
+/*    public Instant getExpirationDateTime() {
         return expirationDateTime;
     }
 
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     public void setExpirationDateTime(Instant expirationDateTime) {
         this.expirationDateTime = expirationDateTime;
-    }
+    }*/
 
-    public void addProduct(Product product) {
+
+/*    public void addProduct(Product product) {
         products.add(product);
         product.setBooth(this);
     }
@@ -72,5 +82,5 @@ public class Booth extends AuditModel{
     public void removeProduct(Product product) {
         products.remove(product);
         product.setBooth(null);
-    }
+    }*/
 }

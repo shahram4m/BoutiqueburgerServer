@@ -43,10 +43,12 @@ public class BoothService {
     public Booth createBooth(BoothRequest boothRequest) {
         Booth booth = new Booth();
         booth.setTitle(boothRequest.getTitle());
+        //booth.setExpirationDateTime(boothRequest.getExpirationDateTime());
+        logger.info(boothRequest.getTitle());
 
-        boothRequest.getProducts().forEach(productRequest -> {
+/*        boothRequest.getProducts().forEach(productRequest -> {
             booth.addProduct(new Product(productRequest.getTitle()));
-        });
+        });*/
 
 /*        Instant now = Instant.now();
         Instant expirationDateTime = now.plus(Duration.ofDays(boothRequest.getBoothLength().getDays()))

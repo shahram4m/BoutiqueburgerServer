@@ -29,7 +29,7 @@ public class Product extends AuditModel{
     @JoinColumn(name = "booth_id", nullable = false)
     private Booth booth;
 
-    private List<OrderDetail> orderDetails = new ArrayList<>();
+    //private List<OrderDetail> orderDetails = new ArrayList<>();
 
     public Product() {}
 
@@ -82,7 +82,7 @@ public class Product extends AuditModel{
         this.description = description;
     }
 
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
+/*    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
     @Size(min = 2, max = 6)
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 30)
@@ -92,5 +92,5 @@ public class Product extends AuditModel{
 
     public void setOrderDetails(List<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
-    }
+    }*/
 }

@@ -24,8 +24,8 @@ public class ProductRequest {
     @JoinColumn(name = "booth_id", nullable = false)
     private Booth booth;
 
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
-    @Size(min = 2, max = 6)
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    //@Size(min = 2, max = 6)
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 30)
     private List<OrderDetail> orderDetails = new ArrayList<>();

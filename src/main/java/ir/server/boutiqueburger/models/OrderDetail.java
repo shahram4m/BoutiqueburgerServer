@@ -1,5 +1,8 @@
 package ir.server.boutiqueburger.models;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -15,8 +18,12 @@ public class OrderDetail extends AuditModel{
 
     private double totalPrice;
 
-    private Order order;
+    //private Order order;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "product_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+   // @JsonIgnore
     private Product product;
 
     public OrderDetail() {}
@@ -29,7 +36,7 @@ public class OrderDetail extends AuditModel{
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+/*    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id", nullable = false)
     public Order getOrder() {
         return order;
@@ -37,7 +44,7 @@ public class OrderDetail extends AuditModel{
 
     public void setOrder(Order order) {
         this.order = order;
-    }
+    }*/
 
     public int getQuantity() {
         return quantity;
@@ -55,7 +62,7 @@ public class OrderDetail extends AuditModel{
         this.totalPrice = totalPrice;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+/*    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
     public Product getProduct() {
         return product;
@@ -63,7 +70,7 @@ public class OrderDetail extends AuditModel{
 
     public void setProduct(Product product) {
         this.product = product;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {

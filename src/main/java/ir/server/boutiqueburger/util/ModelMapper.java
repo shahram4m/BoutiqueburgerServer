@@ -19,24 +19,24 @@ public class ModelMapper {
         boothResponse.setId(booth.getId());
         boothResponse.setTitle(booth.getTitle());
         boothResponse.setCreationDateTime(booth.getCreatedAt());
-        boothResponse.setExpirationDateTime(booth.getExpirationDateTime());
-        Instant now = Instant.now();
-        boothResponse.setExpired(booth.getExpirationDateTime().isBefore(now));
+       // boothResponse.setExpirationDateTime(booth.getExpirationDateTime());
+        //Instant now = Instant.now();
+        //boothResponse.setExpired(booth.getExpirationDateTime().isBefore(now));
 
-        List<ProductResponse> productResponses = booth.getProducts().stream().map(product -> {
+/*        List<ProductResponse> productResponses = booth.getProducts().stream().map(product -> {
             ProductResponse productResponse = new ProductResponse();
             productResponse.setId(product.getId());
             productResponse.setTitle(product.getTitle());
 
-            /*if(choiceVotesMap.containsKey(choice.getId())) {
+            *//*if(choiceVotesMap.containsKey(choice.getId())) {
                 productResponse.setVoteCount(choiceVotesMap.get(choice.getId()));
             } else {
                 productResponse.setVoteCount(0);
-            }*/
+            }*//*
             return productResponse;
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toList());*/
 
-        boothResponse.setProducts(productResponses);
+        //boothResponse.setProducts(productResponses);
         UserSummary creatorSummary = new UserSummary(creator.getId(), creator.getUsername(), creator.getName());
         boothResponse.setCreatedBy(creatorSummary);
 

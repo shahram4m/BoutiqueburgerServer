@@ -18,7 +18,7 @@ public class Order extends AuditModel {
 
     private double grandTotal;
 
-    private List<OrderDetail> orderDetails = new ArrayList<>();
+    //private List<OrderDetail> orderDetails = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
@@ -40,7 +40,7 @@ public class Order extends AuditModel {
             this.grandTotal = grandTotal;
     }
 
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
+/*    @OneToMany(targetEntity = OrderDetail.class, mappedBy = "order",cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
     @Size(min = 2, max = 6)
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 30)
@@ -52,6 +52,7 @@ public class Order extends AuditModel {
             this.orderDetails = orderDetails;
     }
 
+
     public void addOrderDetail(OrderDetail orderDetail) {
             orderDetails.add(orderDetail);
             orderDetail.setOrder(this);
@@ -61,7 +62,7 @@ public class Order extends AuditModel {
             orderDetails.remove(orderDetail);
             orderDetail.setOrder(null);
     }
-
+*/
     public User getUser() {
         return user;
     }
