@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class ModelMapper {
 
-    public static BoothResponse mapBoothToBoothResponse(Booth booth, Map<Long, Long> choiceVotesMap, User creator, Long userVote) {
+    public static BoothResponse mapBoothToBoothResponse(Booth booth, User creator) {
         BoothResponse boothResponse = new BoothResponse();
         boothResponse.setId(booth.getId());
         boothResponse.setTitle(booth.getTitle());

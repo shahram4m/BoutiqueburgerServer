@@ -59,7 +59,7 @@ public class BoothService {
         return boothRepository.save(booth);
     }
 
-/*    public PagedResponse<BoothResponse> getAllBooths(UserPrincipal currentUser, int page, int size) {
+    public PagedResponse<BoothResponse> getAllBooths(UserPrincipal currentUser, int page, int size) {
         validatePageNumberAndSize(page, size);
 
         // Retrieve Booths
@@ -73,21 +73,45 @@ public class BoothService {
 
         // Map Booths to BoothResponses containing vote counts and booth creator details
         List<Long> boothIds = booths.map(Booth::getId).getContent();
-        Map<Long, Long> choiceVoteCountMap = getChoiceVoteCountMap(boothIds);
-        Map<Long, Long> boothUserVoteMap = getBoothUserVoteMap(currentUser, boothIds);
+        //Map<Long, Long> choiceVoteCountMap = getChoiceVoteCountMap(boothIds);
+        //Map<Long, Long> boothUserVoteMap = getBoothUserVoteMap(currentUser, boothIds);
         Map<Long, User> creatorMap = getBoothCreatorMap(booths.getContent());
 
         List<BoothResponse> boothResponses = booths.map(booth -> {
             return ModelMapper.mapBoothToBoothResponse(booth,
-                    choiceVoteCountMap,
-                    creatorMap.get(booth.getCreatedBy()),
-                    boothUserVoteMap == null ? null : boothUserVoteMap.getOrDefault(booth.getId(), null));
+                    //choiceVoteCountMap,
+                    creatorMap.get(booth.getCreatedBy()));
+                    //boothUserVoteMap == null ? null : boothUserVoteMap.getOrDefault(booth.getId(), null));
         }).getContent();
 
         return new PagedResponse<>(boothResponses, booths.getNumber(),
                 booths.getSize(), booths.getTotalElements(), booths.getTotalPages(), booths.isLast());
     }
 
+    private void validatePageNumberAndSize(int page, int size) {
+        if(page < 0) {
+            throw new BadRequestException("Page number cannot be less than zero.");
+        }
+
+        if(size > AppConstants.MAX_PAGE_SIZE) {
+            throw new BadRequestException("Page size must not be greater than " + AppConstants.MAX_PAGE_SIZE);
+        }
+    }
+
+    Map<Long, User> getBoothCreatorMap(List<Booth> booths) {
+        // Get Booth Creator details of the given list of booths
+        List<Long> creatorIds = booths.stream()
+                .map(Booth::getCreatedBy)
+                .distinct()
+                .collect(Collectors.toList());
+
+        List<User> creators = userRepository.findByIdIn(creatorIds);
+        Map<Long, User> creatorMap = creators.stream()
+                .collect(Collectors.toMap(User::getId, Function.identity()));
+
+        return creatorMap;
+    }
+/*
     public PagedResponse<BoothResponse> getBoothsCreatedBy(String username, UserPrincipal currentUser, int page, int size) {
         validatePageNumberAndSize(page, size);
 
@@ -224,15 +248,7 @@ public class BoothService {
         return ModelMapper.mapBoothToBoothResponse(booth, choiceVotesMap, creator, vote.getChoice().getId());
     }
 
-    private void validatePageNumberAndSize(int page, int size) {
-        if(page < 0) {
-            throw new BadRequestException("Page number cannot be less than zero.");
-        }
 
-        if(size > AppConstants.MAX_PAGE_SIZE) {
-            throw new BadRequestException("Page size must not be greater than " + AppConstants.MAX_PAGE_SIZE);
-        }
-    }
 
     private Map<Long, Long> getChoiceVoteCountMap(List<Long> boothIds) {
         // Retrieve Vote Counts of every Choice belonging to the given boothIds
@@ -256,17 +272,5 @@ public class BoothService {
         return boothUserVoteMap;
     }
 
-    Map<Long, User> getBoothCreatorMap(List<Booth> booths) {
-        // Get Booth Creator details of the given list of booths
-        List<Long> creatorIds = booths.stream()
-                .map(Booth::getCreatedBy)
-                .distinct()
-                .collect(Collectors.toList());
-
-        List<User> creators = userRepository.findByIdIn(creatorIds);
-        Map<Long, User> creatorMap = creators.stream()
-                .collect(Collectors.toMap(User::getId, Function.identity()));
-
-        return creatorMap;
-    }*/
+    */
 }

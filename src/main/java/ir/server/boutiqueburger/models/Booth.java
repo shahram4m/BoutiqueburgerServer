@@ -17,7 +17,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "booths")
-public class Booth extends AuditModel{
+public class Booth extends UserDateAudit{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

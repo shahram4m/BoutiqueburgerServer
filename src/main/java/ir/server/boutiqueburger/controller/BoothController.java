@@ -57,27 +57,27 @@ public class BoothController {
     }
 
 
-/*
-    @GetMapping
-    public PagedResponse<BoothResponse> getPolls(@CurrentUser UserPrincipal currentUser,
+
+    @GetMapping("/getall")
+    public PagedResponse<BoothResponse> getBooth(@CurrentUser UserPrincipal currentUser,
                                                  @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
                                                  @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
         return boothService.getAllBooths(currentUser, page, size);
     }
 
-
-    @GetMapping("/{pollId}")
+/*
+    @GetMapping("/{boothId}")
     public PollResponse getPollById(@CurrentUser UserPrincipal currentUser,
                                     @PathVariable Long pollId) {
-        return pollService.getPollById(pollId, currentUser);
+        return boothService.getPollById(pollId, currentUser);
     }
 
-    @PostMapping("/{pollId}/votes")
+    @PostMapping("/{boothId}/votes")
     @PreAuthorize("hasRole('USER')")
-    public PollResponse castVote(@CurrentUser UserPrincipal currentUser,
+    public BoothResponse castVote(@CurrentUser UserPrincipal currentUser,
                                  @PathVariable Long pollId,
                                  @Valid @RequestBody VoteRequest voteRequest) {
-        return pollService.castVoteAndGetUpdatedPoll(pollId, voteRequest, currentUser);
+        return pollService.castVoteAndGetUpdatedPoll(boothId, voteRequest, currentUser);
     }
 */
 
